@@ -1,5 +1,5 @@
 {
-  "name": "hplayer",
+  "name": "iplayer",
   "version": "1.0.0",
   "description": "Audio player with voice API control",
   "main": "index.html",
@@ -27,5 +27,13 @@
     "gulp-useref": "^3.0.8",
     "gulp-watch": "^4.3.5",
     "rimraf": "^2.5.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamanovich/iplayer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hamanovich/iplayer/issues"
+  },
+  "homepage": "https://github.com/hamanovich/iplayer#readme"
 }
