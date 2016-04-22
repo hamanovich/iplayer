@@ -44,7 +44,8 @@ gulp.task('html:build', () => {
     gulp.src(path.src.html)
         .pipe(rigger())
         .pipe(htmlmin({
-            collapseWhitespace: true
+            collapseWhitespace: true,
+            removeComments: true
         }))
         .pipe(gulp.dest(path.build.html));
 });

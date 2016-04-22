@@ -23,9 +23,6 @@ class Favourite {
 					(sessionStorage.getItem('favId')
 							? (sessionStorage.getItem('favId') + ',')
 							: '') + audioContext.audio.id);
-
-			//console.log()
-			sessionStorage.setObject('favObj', this.getSongById(id));
 		}
 
 		if (sessionStorage.getItem('favId')){

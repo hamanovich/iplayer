@@ -22,6 +22,7 @@ class AudioContext {
 		this.audio.onended = this.onEnd;
 
 		sessionStorage.setItem('currentId', this.audio.id);
+		sessionStorage.setItem('action', 'play');
 	}
 
 	setStop() {

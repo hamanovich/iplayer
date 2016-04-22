@@ -65,7 +65,6 @@ class IPlayer {
 
 
 		function onStart() {
-			console.log('onstart')
 			self.recognizing = true;
 
 			restartTimer();
@@ -142,11 +141,10 @@ class IPlayer {
 				audioContext.setPlay(self.songs[indx]);
 
 				self.index = indx;
-				indx = indx + 1;
 
 				sessionStorage.setItem('index', self.index);
 
-				self.highlight(+sessionStorage.getItem('index'));
+				self.constructor.highlight(+sessionStorage.getItem('index'));
 			}
 
 			if (el.classList.contains('favLink')){
@@ -160,9 +158,11 @@ class IPlayer {
 					audioContext.setPlay(data.results[0]);
 
 					if (document.querySelector('.tune-wrap [data-id="'+ data.results[0].trackId + '"]')) {
-						sessionStorage.setItem('index', document.querySelector('.tune-wrap [data-id="' + data.results[0].trackId + '"]').closest('[data-index]').dataset.index)
+						sessionStorage
+						.setItem('index', document.querySelector('.tune-wrap [data-id="' + data.results[0].trackId + '"]')
+						.closest('[data-index]').dataset.index);
 
-						self.highlight(+sessionStorage.getItem('index'));
+						self.constructor.highlight(+sessionStorage.getItem('index'));
 					}
 				});
 			}
@@ -201,17 +201,18 @@ class IPlayer {
 			if (this.commands.hasOwnProperty(i)) {
 				if (this.commands[i].indexOf(action) !== -1) {
 					action = i;
+					sessionStorage.setItem('action', action);
 				}
 			}
 		}
 
-		sessionStorage.setItem('action', action);
-
-		console.log(action)
+		console.log(action);
 
 		// Voice API
 		switch (action) {
 			case 'play':
+
+				sessionStorage.setItem('action', 'stop');
 
 				results = data.results;
 
@@ -241,6 +242,7 @@ class IPlayer {
 
 				if (ssaction === 'play') {
 					audioContext.setPlay(this.songs[+sessionStorage.getItem('index')]);
+					sessionStorage.setItem('action', 'play');
 				}
 
 				if (ssfavidList){
@@ -261,14 +263,14 @@ class IPlayer {
 
 			case 'autoplay':
 
-				audioContext.audio.autoplay = (audioContext.audio.autoplay === true) ? false: true;
+				audioContext.audio.autoplay = (audioContext.audio.autoplay !== true);
 				audioContext.audio.volume = this.volume;
 
 				break;
 
 			case 'loop':
 
-				audioContext.audio.loop = (audioContext.audio.loop === true) ? false: true;
+				audioContext.audio.loop = (audioContext.audio.loop !== true);
 				audioContext.audio.volume = this.volume;
 
 				break;
@@ -289,6 +291,8 @@ class IPlayer {
 
 				sessionStorage.setItem('index', +randTrack);
 				audioContext.setPlay(this.songs[+sessionStorage.getItem('index')]);
+
+				break;
 
 			case 'previous':
 
@@ -325,8 +329,7 @@ class IPlayer {
 
 			case 'mute':
 
-				audioContext.audio.muted =
-						(audioContext.audio.muted === true) ? false : true;
+				audioContext.audio.muted = (audioContext.audio.muted !== true);
 
 				break;
 
@@ -369,11 +372,11 @@ class IPlayer {
 				break;
 		}
 
-		this.highlight(+sessionStorage.getItem('index'));
+		this.constructor.highlight(+sessionStorage.getItem('index'));
 
 	}
 
-	highlight(indx) {
+	static highlight(indx) {
 		[].forEach.call(document.querySelectorAll('[data-index]'), (el) => {
 			el.classList.remove('active-track');
 		});
@@ -452,7 +455,7 @@ class IPlayer {
 		if (this.speechNotification === 'speech'){
 
 			this.utterance.text = msg;
-			this.utterance.onend = (e) => {
+			this.utterance.onend = () => {
 				if (audioContext.audio !== null) {
 					audioContext.audio.volume = this.volume;
 				}
@@ -504,7 +507,7 @@ class IPlayer {
 	/*
 	 * Creation Favourite list layout via <template>
 	 */
-	favourites(data, i) {
+	favourites() {
 		let favContent = document.getElementById('favourites').content,
 			favWrap = document.querySelector('.favourites');
 
