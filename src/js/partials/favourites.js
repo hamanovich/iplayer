@@ -1,4 +1,36 @@
 class Favourite {
+	favApi(action) {
+		let favList = document.querySelector('.fav-list'),
+			favChilds = favList.children,
+			favListNodes = Array.prototype.slice.call(favChilds),
+			favLength = favListNodes.length,
+			firstId = favChilds[0].dataset.id,
+			lastId = favChilds[favLength - 1].dataset.id,
+			favActive = favList.querySelector('.active') || favChilds[favLength - 1],
+			activeId = favActive.dataset.id,
+			activePrev = (activeId !== firstId) ? favActive.previousElementSibling : favChilds[favLength - 1],
+			activeNext = (activeId !== lastId) ? favActive.nextElementSibling : favChilds[0];
+
+		switch (action) {
+			case 'play':
+
+				favChilds[0].children[0].click();
+
+				break;
+
+			case 'next':
+
+				activeNext.children[0].click();
+
+				break;
+
+			case 'prev':
+
+				activePrev.children[0].click();
+
+				break;
+		}
+	}
 
 	addToFavourite() {
 		let favWrap = document.querySelector('.favourites'),
@@ -27,6 +59,7 @@ class Favourite {
 
 		if (sessionStorage.getItem('favId')){
 			favWrap.classList.remove('hidden');
+			this.highlightFavourite(sessionStorage.getItem('currentId'));
 		}
 	}
 
@@ -37,6 +70,8 @@ class Favourite {
 				likedIcon = document.querySelector('[data-id="' + id + '"] .liked'),
 				ssfavidArray = sessionStorage.getItem('favId').split(','),
 				idIndex = ssfavidArray.indexOf(id);
+
+		this.favApi('next');
 
 		favList.removeChild(favList.querySelector('[data-id="' + id + '"]'));
 		ssfavidArray.splice(idIndex, 1);
@@ -78,7 +113,9 @@ class Favourite {
 			el.classList.remove('active');
 		});
 
-		document.querySelector('[data-id="' + +id + '"]').classList.add('active');
+		if (document.querySelector('.favourites [data-id="' + id + '"]')) {
+			document.querySelector('.favourites [data-id="' + id + '"]').classList.add('active');
+		}
 	}
 
 }

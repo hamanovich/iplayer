@@ -5,7 +5,6 @@ $color-theme-dark: #2a323a;
 
 @mixin textOverflow(){
   white-space: nowrap;
-  width: 90%;
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
@@ -49,6 +48,15 @@ h5{
   margin-bottom: 15px;
 }
 
+mark{
+  width: 80px;
+  display: inline-block;
+  text-align: center;
+  padding: 3px 0;
+  margin: 3px;
+  font-weight: 700;
+}
+
 .caption {
   @include textOverflow();
   margin: 0;
@@ -59,6 +67,10 @@ h5{
 
   img{
     height: 100px;
+  }
+
+  h5{
+    padding-right: 10%;
   }
 }
 
@@ -93,6 +105,10 @@ h5{
     padding: 0 15px;
     margin: 0;
     font-size: 14px;
+
+    .active a{
+      color: #df691a;
+    }
   }
 
   @include respond(1600){

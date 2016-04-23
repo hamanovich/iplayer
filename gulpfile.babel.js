@@ -8,7 +8,6 @@ import cssmin   from 'gulp-minify-css';
 import rename   from 'gulp-rename';
 import concat   from 'gulp-concat';
 import uglify   from 'gulp-uglify';
-import jslint   from 'gulp-jslint';
 import htmlmin  from 'gulp-htmlmin';
 import useref   from 'gulp-useref';
 import rigger   from 'gulp-rigger';
@@ -77,24 +76,6 @@ gulp.task('style:build', () => {
         .pipe(gulp.dest(path.build.css));
 });
 
-gulp.task('js:lint', () => {
-    gulp.src(path.src.js)
-        .pipe(rigger())
-        .pipe(jslint({
-            node: true,
-            evil: true,
-            nomen: true,
-            browser: true,
-            white: true,
-            global: [],
-            predef: ['alert', 'utils', 'audioContext', 'selectLanguage', 'iPlayer', 'Audio'],
-reporter: 'default',
-        }))
-        .on('error', (error) => {
-            console.error(String(error));
-        });
-})
-
 gulp.task('build', [
     'html:build',
     'js:build',
@@ -102,13 +83,13 @@ gulp.task('build', [
 ]);
 
 gulp.task('watch', () => {
-    watch([path.watch.html], (event, cb) => {
+    watch([path.watch.html], () => {
         gulp.start('html:build');
     });
-    watch([path.watch.style], (event, cb) => {
+    watch([path.watch.style], () => {
         gulp.start('style:build');
     });
-    watch([path.watch.js], (event, cb) => {
+    watch([path.watch.js], () => {
         gulp.start('js:build');
     });
 });

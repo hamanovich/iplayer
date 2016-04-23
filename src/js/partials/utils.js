@@ -10,9 +10,11 @@ class Utils {
 		};
 
 		script = document.createElement('script');
-		script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+		script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName;
 
 		document.body.appendChild(script);
+
+		console.warn('JSONP --- ', url);
 	}
 
 	toCapitalize(str) {
@@ -25,12 +27,3 @@ class Utils {
 }
 
 let utils = new Utils();
-//
-//Storage.prototype.setObject = function(key, value) {
-//	this.setItem(key, JSON.stringify(value));
-//}
-//
-//Storage.prototype.getObject = function(key) {
-//	var value = this.getItem(key);
-//	return value && JSON.parse(value);
-//}

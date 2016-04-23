@@ -32,9 +32,9 @@ class AudioContext {
 		}
 	}
 
-	onEnd(e){
+	onEnd(){
 		if (this.autoplay) {
-			iPlayer.api(null, 'next', sessionStorage.getItem('song'));
+			iPlayer.api('next');
 		}
 	}
 
