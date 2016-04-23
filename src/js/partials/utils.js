@@ -13,8 +13,6 @@ class Utils {
 		script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName;
 
 		document.body.appendChild(script);
-
-		console.warn('JSONP --- ', url);
 	}
 
 	toCapitalize(str) {

@@ -3,18 +3,24 @@
 */
 
 class IPlayer {
-	constructor(options){
+	constructor({
+			patience = 3,
+			limit = 150,
+			volume = 1,
+			volumeWhenSpeak = 0.1,
+			loading = 'Loading…',
+			speechNotification = 'alert'} = {}){
+
 		if (window.webkitSpeechRecognition === 'undefined') {
 			return;
 		}
 
-		this.options    = options || {};
-		this.patience   = this.options.patience || 3;
-		this.limit      = this.options.limit || 50;
-		this.volume     = this.options.volume || 1;
-		this.volumeWhenSpeak = this.options.volumeWhenSpeak || 0.1;
-		this.loadingCopy = this.options.loading || 'Loading…';
-		this.speechNotification = this.options.speechNotification || 'alert';
+		this.patience = patience;
+		this.limit = limit;
+		this.volume = volume || 1;
+		this.volumeWhenSpeak = volumeWhenSpeak;
+		this.loadingCopy = loading;
+		this.speechNotification = speechNotification;
 
 		this.langs = [
 			['English', ['en-GB']],
@@ -53,6 +59,9 @@ class IPlayer {
 
 		this.loadingElement = document.querySelector('.loading');
 
+		this.audioContext = new AudioContext();
+		this.fav = new Favourite();
+
 		if (typeof this.init === 'function' && this.init !== 'undefined') {
 			this.init();
 		}
@@ -65,14 +74,13 @@ class IPlayer {
 		let self = this,
 			main = document.getElementById('main');
 
-
 		function onStart() {
 			self.recognizing = true;
 
 			restartTimer();
 
-			if (audioContext.audio !== null) {
-				audioContext.audio.volume = self.volumeWhenSpeak;
+			if (self.audioContext.audio !== null) {
+				self.audioContext.audio.volume = self.volumeWhenSpeak;
 			}
 		}
 
@@ -100,7 +108,7 @@ class IPlayer {
 				self.refresh();
 				self.loader('remove');
 
-				utils.jsonp('https://itunes.apple.com/search?term=' + suffix + '&limit=' + self.options.limit, (data) => {
+				utils.jsonp('https://itunes.apple.com/search?term=' + suffix + '&limit=' + self.limit, (data) => {
 					self.api(action, data, suffix);
 				});
 
@@ -140,7 +148,7 @@ class IPlayer {
 
  				indx = +el.closest('[data-index]').dataset.index;
 
-				audioContext.setPlay(self.suffixs[indx]);
+				self.audioContext.setPlay(self.suffixs[indx]);
 
 				self.index = indx;
 
@@ -148,7 +156,7 @@ class IPlayer {
 				sessionStorage.setItem('type', 'main');
 
 				self.constructor.highlight(+sessionStorage.getItem('index'));
-				fav.highlightFavourite(sessionStorage.getItem('currentId'));
+				self.fav.highlightFavourite(sessionStorage.getItem('currentId'));
 			}
 
 			if (el.classList.contains('favLink')){
@@ -159,7 +167,7 @@ class IPlayer {
 				sessionStorage.setItem('type', 'favourite');
 
 				utils.jsonp('https://itunes.apple.com/lookup?id=' + id, (data) => {
-					audioContext.setPlay(data.results[0]);
+					self.audioContext.setPlay(data.results[0]);
 
 					if (document.querySelector('.tune-wrap [data-id="'+ data.results[0].trackId + '"]')) {
 						sessionStorage
@@ -168,14 +176,14 @@ class IPlayer {
 					}
 
 					self.constructor.highlight(+sessionStorage.getItem('index'));
-					fav.highlightFavourite(id);
+					self.fav.highlightFavourite(id);
 				});
 			}
 		}
 
 		this.language();
 		this.sessions();
-		this.constructor.favourites();
+		this.fav.favourites();
 
 		this.recognition.onstart = onStart;
 		this.recognition.onend = onEnd;
@@ -195,8 +203,7 @@ class IPlayer {
 			favList = favWrap.querySelector('.fav-list'),
 			query = document.getElementById('search-query'),
 			total = document.getElementById('search-total'),
-			ssaction = (sessionStorage.getItem('action') === 'stop')
-					? 'stop' : 'play',
+			ssaction = (sessionStorage.getItem('action') === 'stop') ? 'stop' : 'play',
 			results,
 			item,
 			activeElement,
@@ -250,7 +257,7 @@ class IPlayer {
 
 				if (sessionStorage.getItem('type') !== 'favourite'){
 					if (ssaction === 'play') {
-						audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+						this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 						sessionStorage.setItem('action', 'play');
 					}
 				}
@@ -258,14 +265,14 @@ class IPlayer {
 				if (sessionStorage.getItem('favId')){
 					utils.jsonp('https://itunes.apple.com/lookup?id=' + sessionStorage.getItem('favId'), (data) => {
 						for (let i = 0; i < data.results.length; i = i + 1){
-							fav.updateFavourites(data.results[i]);
-							fav.updateFavouritesLikes(data.results[i]);
+							this.fav.updateFavourites(data.results[i]);
+							this.fav.updateFavouritesLikes(data.results[i]);
 						}
 
-						fav.highlightFavourite(sessionStorage.getItem('currentId'));
+						this.fav.highlightFavourite(sessionStorage.getItem('currentId'));
 
 						if (sessionStorage.getItem('type') === 'favourite') {
-							fav.favApi('play');
+							this.fav.favApi('play');
 						}
 					});
 				}
@@ -274,21 +281,21 @@ class IPlayer {
 
 			case 'repeat':
 
-				audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+				this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 
 				break;
 
 			case 'autoplay':
 
-				audioContext.audio.autoplay = (audioContext.audio.autoplay !== true);
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.autoplay = (this.audioContext.audio.autoplay !== true);
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
 			case 'loop':
 
-				audioContext.audio.loop = (audioContext.audio.loop !== true);
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.loop = (this.audioContext.audio.loop !== true);
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
@@ -296,7 +303,7 @@ class IPlayer {
 
 				if(sessionStorage.getItem('type') === 'favourite') {
 
-					fav.favApi('next');
+					this.fav.favApi('next');
 
 				} else {
 
@@ -305,9 +312,9 @@ class IPlayer {
 					}
 
 					sessionStorage.setItem('index', +sessionStorage.getItem('index') + 1);
-					audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+					this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 
-					fav.highlightFavourite(sessionStorage.getItem('currentId'));
+					this.fav.highlightFavourite(sessionStorage.getItem('currentId'));
 
 				}
 
@@ -317,7 +324,7 @@ class IPlayer {
 
 				if(sessionStorage.getItem('type') === 'favourite') {
 
-					fav.favApi('prev');
+					this.fav.favApi('prev');
 
 				} else {
 
@@ -326,9 +333,9 @@ class IPlayer {
 					}
 
 					+sessionStorage.setItem('index', +sessionStorage.getItem('index') - 1);
-					audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+					this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 
-					fav.highlightFavourite(sessionStorage.getItem('currentId'));
+					this.fav.highlightFavourite(sessionStorage.getItem('currentId'));
 				}
 
 				break;
@@ -337,13 +344,13 @@ class IPlayer {
 				let randTrack = utils.getRandomInt(0, this.limit);
 
 				sessionStorage.setItem('index', +randTrack);
-				audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+				this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 
 				break;
 
 			case 'stop':
 
-				audioContext.setStop();
+				this.audioContext.setStop();
 
 				break;
 
@@ -359,29 +366,29 @@ class IPlayer {
 					}
 				}
 
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
 			case 'mute':
 
-				audioContext.audio.muted = (audioContext.audio.muted !== true);
+				this.audioContext.audio.muted = (this.audioContext.audio.muted !== true);
 
 				break;
 
 			case 'like':
 
-				fav.addToFavourite();
+				this.fav.addToFavourite();
 
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
 			case 'dislike':
 
-				fav.removeFromFavourite();
+				this.fav.removeFromFavourite();
 
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
@@ -396,13 +403,13 @@ class IPlayer {
 					window.open(collection, '_blank');
 				}
 
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
 			case 'reset':
 				sessionStorage.clear();
-				audioContext.setStop();
+				this.audioContext.setStop();
 
 				while (tuneWrap.firstChild) {
 					tuneWrap.removeChild(tuneWrap.firstChild);
@@ -421,17 +428,17 @@ class IPlayer {
 				if (sessionStorage.getItem('type') === 'main') {
 
 					sessionStorage.setItem('type', 'favourite');
-					fav.favApi('play');
+					this.fav.favApi('play');
 
 				} else {
 					sessionStorage.setItem('type', 'main');
-					audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
+					this.audioContext.setPlay(this.suffixs[+sessionStorage.getItem('index')]);
 				}
 
-				fav.highlightFavourite(sessionStorage.getItem('currentId'));
+				this.fav.highlightFavourite(sessionStorage.getItem('currentId'));
 				this.constructor.highlight(+sessionStorage.getItem('index'));
 
-				audioContext.audio.volume = this.volume;
+				this.audioContext.audio.volume = this.volume;
 
 				break;
 
@@ -443,7 +450,7 @@ class IPlayer {
 				break;
 		}
 
-		if (sessionStorage.getItem('type') === 'main') {
+		if (sessionStorage.getItem('type') !== 'favourite') {
 			this.constructor.highlight(+sessionStorage.getItem('index'));
 		}
 	}
@@ -508,7 +515,7 @@ class IPlayer {
 
 		this.loader('remove');
 
-		utils.jsonp('https://itunes.apple.com/search?term=' + sssuffix + '&limit=' + this.options.limit, (data) => {
+		utils.jsonp('https://itunes.apple.com/search?term=' + sssuffix + '&limit=' + this.limit, (data) => {
 			this.api('play', data, sssuffix);
 		});
 	}
@@ -519,8 +526,8 @@ class IPlayer {
 
 			this.utterance.text = msg;
 			this.utterance.onend = () => {
-				if (audioContext.audio !== null) {
-					audioContext.audio.volume = this.volume;
+				if (this.audioContext.audio !== null) {
+					this.audioContext.audio.volume = this.volume;
 				}
 			};
 
@@ -529,8 +536,8 @@ class IPlayer {
 		} else if (this.speechNotification === 'alert') {
 			alert(msg);
 
-			if (audioContext.audio !== null) {
-				audioContext.audio.volume = this.volume;
+			if (this.audioContext.audio !== null) {
+				this.audioContext.audio.volume = this.volume;
 			}
 		}
 
@@ -566,21 +573,4 @@ class IPlayer {
 
 		tuneWrap.appendChild(document.importNode(thumbnailContent, true));
 	}
-
-	/*
-	 * Creation Favourite list layout via <template>
-	 */
-	static favourites() {
-		let favContent = document.getElementById('favourites').content,
-			favWrap = document.querySelector('.favourites');
-
-		favWrap.appendChild(document.importNode(favContent, true));
-
-		if (!sessionStorage.getItem('favId')){
-			favWrap.classList.add('hidden');
-		} else {
-			favWrap.classList.remove('hidden');
-		}
-	}
-
 }

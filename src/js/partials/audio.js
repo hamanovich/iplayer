@@ -53,5 +53,3 @@ class AudioContext {
 		progressBar.style.width = currentRate + '%';
 	}
 }
-
-let audioContext = new AudioContext();

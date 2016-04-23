@@ -6,7 +6,7 @@ class Favourite {
 			favLength = favListNodes.length,
 			firstId = favChilds[0].dataset.id,
 			lastId = favChilds[favLength - 1].dataset.id,
-			favActive = favList.querySelector('.active') || favChilds[favLength - 1],
+			favActive = favList.querySelector('.active') || favChilds[0],
 			activeId = favActive.dataset.id,
 			activePrev = (activeId !== firstId) ? favActive.previousElementSibling : favChilds[favLength - 1],
 			activeNext = (activeId !== lastId) ? favActive.nextElementSibling : favChilds[0];
@@ -14,7 +14,7 @@ class Favourite {
 		switch (action) {
 			case 'play':
 
-				favChilds[0].children[0].click();
+				favActive.children[0].click();
 
 				break;
 
@@ -26,7 +26,7 @@ class Favourite {
 
 			case 'prev':
 
-				activePrev.children[0].click();
+				activePfukorev.children[0].click();
 
 				break;
 		}
@@ -41,9 +41,9 @@ class Favourite {
 				likedIcon = document.querySelector('.active-track .liked');
 
 		if (!favList.querySelector('[data-id="' + id + '"]')){
-			a.setAttribute('href', audioContext.audio.src);
+			a.setAttribute('href', iPlayer.audioContext.audio.src);
 			a.setAttribute('class', 'favLink');
-			a.innerHTML = audioContext.audio.title;
+			a.innerHTML = iPlayer.audioContext.audio.title;
 
 			li.dataset.id = id;
 			li.appendChild(a);
@@ -54,7 +54,7 @@ class Favourite {
 			sessionStorage.setItem('favId',
 					(sessionStorage.getItem('favId')
 							? (sessionStorage.getItem('favId') + ',')
-							: '') + audioContext.audio.id);
+							: '') + iPlayer.audioContext.audio.id);
 		}
 
 		if (sessionStorage.getItem('favId')){
@@ -65,18 +65,20 @@ class Favourite {
 
 	removeFromFavourite() {
 		let favWrap = document.querySelector('.favourites'),
-				favList = favWrap.querySelector('.fav-list'),
-				id = sessionStorage.getItem('currentId'),
-				likedIcon = document.querySelector('[data-id="' + id + '"] .liked'),
-				ssfavidArray = sessionStorage.getItem('favId').split(','),
-				idIndex = ssfavidArray.indexOf(id);
+			favList = favWrap.querySelector('.fav-list'),
+			id = sessionStorage.getItem('currentId'),
+			likedIcon = document.querySelector('[data-id="' + id + '"] .liked'),
+			ssfavidArray = sessionStorage.getItem('favId').split(','),
+			idIndex = ssfavidArray.indexOf(id);
 
 		this.favApi('next');
 
 		favList.removeChild(favList.querySelector('[data-id="' + id + '"]'));
 		ssfavidArray.splice(idIndex, 1);
 
-		likedIcon.classList.remove('selected');
+		if (likedIcon) {
+			likedIcon.classList.remove('selected');
+		}
 
 		sessionStorage.setItem('favId', ssfavidArray.join());
 
@@ -118,6 +120,20 @@ class Favourite {
 		}
 	}
 
-}
+	/*
+	 * Creation Favourite list layout via <template>
+	 */
+	favourites() {
+		let favContent = document.getElementById('favourites').content,
+				favWrap = document.querySelector('.favourites');
 
-let fav = new Favourite();
+		favWrap.appendChild(document.importNode(favContent, true));
+
+		if (!sessionStorage.getItem('favId')){
+			favWrap.classList.add('hidden');
+		} else {
+			favWrap.classList.remove('hidden');
+		}
+	}
+
+}
