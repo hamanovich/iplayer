@@ -2,8 +2,7 @@ class Favourite {
 	favApi(action) {
 		let favList = document.querySelector('.fav-list'),
 			favChilds = favList.children,
-			favListNodes = Array.prototype.slice.call(favChilds),
-			favLength = favListNodes.length,
+			favLength = favChilds.length,
 			firstId = favChilds[0].dataset.id,
 			lastId = favChilds[favLength - 1].dataset.id,
 			favActive = favList.querySelector('.active') || favChilds[0],
@@ -26,7 +25,7 @@ class Favourite {
 
 			case 'prev':
 
-				activePfukorev.children[0].click();
+				activePrev.children[0].click();
 
 				break;
 		}
