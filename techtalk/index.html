@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Web Speech API as a way to communicate with website</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+	<style>
+		h3{
+			font-size: 1.25em;
+			margin-bottom: .5em;
+		}
+
+		.lead{
+			font-size: 2em;
+		}
+
+		.center{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.shout.shrink{
+			color: #111;
+		}
+	</style>
+</head>
+<body class="shower list">
+	<header class="caption">
+		<h1>Web Speech API as a way to communicate with website</h1>
+		<p>EPAM - TechTalk</p>
+		<p><small style="font-size: .8em;">Siarhei Hamanovich - Senior Software Engineer (UX Development)</small></p>
+	</header>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<ul>
+			<li>Speech Milestones</li>
+		</ul>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<ul>
+			<li>Speech Milestones</li>
+			<li>Web Speech API - what kind of a monster?</li>
+		</ul>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<ul>
+			<li>Speech Milestones</li>
+			<li>Web Speech API - what kind of a monster?</li>
+			<li>Browsers support</li>
+		</ul>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<ul>
+			<li>Speech Milestones</li>
+			<li>Web Speech API - what kind of a monster?</li>
+			<li>Browsers support</li>
+			<li>Speech Synthesis</li>
+		</ul>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API as a way to communicate with website</h2>
+		<h3 style="font-size: 1.3em;">Agenda</h3>
+		<ul>
+			<li>Speech Milestones</li>
+			<li>Web Speech API - what kind of a monster?</li>
+			<li>Browsers support</li>
+			<li>Speech Synthesis</li>
+			<li>Examples</li>
+		</ul>
+		<img src="img/bg.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Speech Milestones</h2>
+		<p>There are many peoples uses <strong>Apple's Siri</strong>, <strong>Google Now</strong>, <strong>Amazon's Alexa</strong> or Microsoft's <strong>Cortana</strong> today in there life. But all this applications don't relate to web browser/applications. One way to communicate with your webpage is <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank">The Web Speech API</a>. Thereby yon can give commands what to do (Speech Recognition) or listen what has written (Speech Synthesis).</p>
+	</section>
+	<section class="slide">
+		<img src="img/introductiontospeechinterfacesforwebapplications-160416150903_8.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Opportunities</h2>
+		<ul>
+			<li>Hands Free</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Opportunities</h2>
+		<ul>
+			<li>Hands Free</li>
+			<li>Extra Hands</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Opportunities</h2>
+		<ul>
+			<li>Hands Free</li>
+			<li>Extra Hands</li>
+			<li>Shortcuts</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Opportunities</h2>
+		<ul>
+			<li>Hands Free</li>
+			<li>Extra Hands</li>
+			<li>Shortcuts</li>
+			<li>Humaneness</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Humaneness</h2>
+		<img src="img/f7bdc494-2c49-4815-a159-5258ecf96de7.gif" alt="" class="center" style="min-width: 450px;"/>
+	</section>
+	<section class="slide">
+		<h2>Apple's Siri</h2>
+		<img src="img/12.11.27-Siri.jpg" alt="" style="max-width: 340px;"/>
+		<ul>
+			<li>Both Speech Recognition and Syntesis</li>
+			<li>Since iOS 5</li>
+			<li><strong>"Hey, Siri"</strong></li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Google Now</h2>
+		<img src="img/35.png" alt="" style="max-width: 340px;"/>
+		<ul>
+			<li>Speech Recognition: Google Search</li>
+			<li>Since Jelly Bean (Android 4.1)</li>
+			<li><strong>"OK, Google"</strong></li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Microsoft's Cortana</h2>
+		<img src="img/ximg_55bc11439921b.png.pagespeed.gp+jp+jw+pj+js+rj+rp+rw+ri+cp+md.ic.SSSZci7j7O.png" alt="" style="max-width: 340px;"/>
+		<ul>
+			<li>Speech Recognition: Search bar</li>
+			<li>Since WP 8.1, Win10, XBOX</li>
+			<li>Chit Chat - human like dialogue</li>
+			<li><strong>"Hey, Cortana"</strong></li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Amazon Alexa</h2>
+		<img src="img/amazonEchoBanner.jpg" alt="" style="max-width: 340px;"/>
+		<ul>
+			<li>Speech Recognition: voice commands</li>
+			<li>Since 2014</li>
+			<li>Intro video - <a href="https://epa.ms/Oqlqp" target="_blank">Echo</a></li>
+			<li><strong>"Alexa"</strong>, <strong>"Amazon"</strong> or <strong>"Echo"</strong></li>
+		</ul>
+	</section>
+	<section class="slide">
+		<img src="img/6d3218fa-13e4-44b4-a32f-61dd23fd6294.gif" alt="" class="center"/>
+	</section>
+	<section class="slide">
+		<img src="img/3235238-2.jpg" alt="" class="cover"/>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API</h2>
+		<p>Consists of 2 parts:</p>
+		<ul>
+			<li><strong>SpeechSyntesis</strong> (text to speech)</li>
+			<li><strong>SpeechRecognition</strong> (speech to commands)</li>
+		</ul>
+		<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank" style="font-size: .75em;">https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API</a></p>
+	</section>
+	<section class="slide">
+		<h2>Web Speech API Specification</h2>
+		<h3>Abstract</h3>
+		<p>This specification defines a JavaScript API to enable web developers to incorporate speech recognition and synthesis into their web pages.</p>
+		<p>It is <strong>NOT</strong> a <span style="text-decoration: underline">W3C Standard</span> nor is it on the W3C Standards Track</p>
+		<p><a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html" target="_blank" style="font-size: .75em;">https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html</a></p>
+	</section>
+	<section class="slide">
+		<h2>Work w/o Specification</h2>
+		<img src="img/19159a2c-4ea1-4f17-ad21-39596b3f0fcd.gif" alt="" class="center" style="margin-top: 1em;"/>
+	</section>
+	<section class="slide">
+		<h2>Browser Support: Speech Recognition API</h2>
+		<img src="img/2016-05-26_1124.png" alt="" style="max-height: 400px;"/>
+	</section>
+	<section class="slide">
+		<h2>Browser Support: Speech Syntesis API</h2>
+		<img src="img/2016-05-26_1126.png" alt="" style="max-height: 400px;"/>
+	</section>
+	<section class="slide">
+		<h2>Google Chrome</h2>
+		<img src="img/introductiontospeechinterfacesforwebapplications-160416150903_24.jpg" alt="" style="max-height: 400px;"/>
+	</section>
+	<section class="slide">
+		<h2>Mozilla Firefox</h2>
+		<img src="img/introductiontospeechinterfacesforwebapplications-160416150903_25.jpg" alt=""/>
+		<p>Disabled by default. Can be enabled via the <code>media.webspeech.synth.enabled</code> and <code>media.webspeech.recognition.enable</code> flags in about:config.</p>
+	</section>
+	<section class="slide">
+		<h2>Microsoft Edge</h2>
+		<img src="img/introductiontospeechinterfacesforwebapplications-160416150903_26.jpg" alt=""/>
+	</section>
+	<section class="slide">
+		<h2 class="shout shrink">Speech <br> Syntesis</h2>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis</h2>
+		<p class="lead">Speech synthesis is the artificial production of human speech (<a href="https://en.wikipedia.org/wiki/Speech_synthesis" target="_blank">Wikipedia</a>).</p>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis: Utterance</h2>
+		<p>Interface: <strong>SpeechSyntesisUtterance</strong>. It has properties:</p>
+		<ul>
+			<li>pitch — from 0 (lowest) to 2 (highest)</li>
+			<li>rate  — from 0.1 (lowest) to 10 (highest)</li>
+			<li>volume  — from 0 (lowest) to 1 (highest)</li>
+			<li>voice — SpeechSynthesisVoice object</li>
+			<li>text</li>
+			<li>lang</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis: Utterance Events</h2>
+		<ul>
+			<li>onboundary — Fired when the utterance reaches a sentence boundary.</li>
+			<li>onstart  — … has begun to be spoken.</li>
+			<li>onpause  — … is paused part way through.</li>
+			<li>onresume — … paused utterance is resumed</li>
+			<li>onend — … has finished being spoken</li>
+			<li>onerror</li>
+			<li>onmark</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis: Properties</h2>
+		<p><code>Read only</code>: a Boolean</p>
+		<ul>
+			<li>paused</li>
+			<li>speaking</li>
+			<li>pending</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis: Methods</h2>
+		<p><code>Read only</code>: a Boolean</p>
+		<ul>
+			<li>Cancel()</li>
+			<li>getVoices()</li>
+			<li>pause() / resume()</li>
+			<li>speak()</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Example #1</h2>
+		<pre>
+			<code>const copy = new SpeechSynthesisUtterance();</code>
+			<code class="mark">copy.text = "Excellence in Software Engineering!";</code>
+			<code>speechSynthesis.speak(copy);</code>
+		</pre>
+		<p>Demo: <a href="https://jsfiddle.net/hamanovich/z7exy01m/" target="_blank">jsFiddle</a></p>
+	</section>
+	<section class="slide">
+		<h2>Speech Syntesis: Voices</h2>
+		<p>The <strong>SpeechSynthesisVoice</strong> interface represents a voice that the system supports. All properties are <code>Read only</code>:</p>
+		<ul>
+			<li>default</li>
+			<li>lang</li>
+			<li>localService</li>
+			<li>name</li>
+			<li>voiceURI</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Example #2</h2>
+		<pre>
+			<code class="mark">let voices = webkitSpeechSynthesis.getVoices();</code>
+			<code>var utter = new webkitSpeechSynthesisUtterance(input.value);</code>
+			<code>utter.voice = voices[selectedOption];</code>
+			<code>webkitspeechSynthesis.speak(utter);</code>
+		</pre>
+		<p>Demo: <a href="https://jsfiddle.net/hamanovich/9jeb7t7p/" target="_blank">jsFiddle</a></p>
+	</section>
+	<section class="slide">
+		<h2>Speech Synthesis Markup Language (SSML)</h2>
+		<p>SSML is an XML-based markup language for speech synthesis applications (<a href="https://en.wikipedia.org/wiki/Speech_Synthesis_Markup_Language" target="_blank">Wikipedia</a>. It includes markup for:</p>
+		<ul>
+			<li>pitch</li>
+			<li>rate</li>
+			<li>duration</li>
+			<li>volume</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>SSML to Create Prompts</h2>
+		<pre>
+			<code>&lt;speak version="1.0"
+		xmlns="http://www.w3.org/2001/10/synthesis"
+		xml:lang="en-US"&gt;</code>
+			<code>&lt;prosody pitch="low"&gt;Low pitch.&lt;/prosody&gt;</code>
+			<code>&lt;prosody rate="1"&gt;Medium speech.&lt;/prosody&gt;</code>
+			<code>&lt;prosody volume="x-loud"&gt;extra loud volume.&lt;/prosody&gt;</code>
+			<code>&lt;/speak&gt;</code>
+		</pre>
+		<p style="margin-top: -.5em;"><a href="https://msdn.microsoft.com/en-us/library/jj127898.aspx" target="_blank">https://msdn.microsoft.com/en-us/library/jj127898.aspx</a></p>
+	</section>
+	<section class="slide">
+		<h2>Speech Synthesis: Recap</h2>
+		<p>Adding synthesized speech to your web application is a great plan to improve accessibility. Do not ignore it inspite of bad browser support.</p>
+	</section>
+	<section class="slide">
+		<h2 class="shout shrink">Speech Recognition</h2>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition</h2>
+		<p>Speech Recognition is an interface, which provides the ability to recognize voice context from an audio input (normally via the device's default speech recognition service) and respond appropriately.</p>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition: Properties</h2>
+		<ul>
+			<li>grammars — custom language rules that will be understood by the current SpeechRecognition.</li>
+			<li>lang</li>
+			<li>continuous — results are returned for each recognition or only a single result</li>
+			<li>interimResults — results that are not yet final</li>
+			<li>maxAlternatives</li>
+			<li>serviceURI — service used by the current SpeechRecognition to handle the actual recognition</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition: Methods</h2>
+		<ul>
+			<li>abort() — stops the speech recognition service from listening to incoming audio and <strong>doesn't</strong> attempt to return a SpeechRecognitionResult</li>
+			<li>stop() — … and attempts to return a SpeechRecognitionResult using the audio captured so far.</li>
+			<li>start() — Starts the speech recognition service listening to incoming audio <strong>with intent</strong> to recognize grammars</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition: Events (1)</h2>
+		<ul>
+			<li>onstart</li>
+			<li>onend</li>
+			<li>onerror</li>
+			<li>onresult</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition: Events (2)</h2>
+		<ul>
+			<li>onaudiostart</li>
+			<li>onsoundstart</li>
+			<li>onspeechstart</li>
+			<li>onaudioend</li>
+			<li>onsoundend</li>
+			<li>onspeechend</li>
+			<li>onnomatch — service returns a final result with <strong>no</strong> significant recognition</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>SpeechRecognitionResult</h2>
+		<p>The SpeechRecognitionResult represents a single recognition match, which may contain multiple <strong>SpeechRecognitionAlternative</strong> objects.</p>
+		<ul>
+			<li>isFinal</li>
+			<li>length</li>
+			<li>SpeechRecognitionAlternative:
+				<ul>
+					<li>confidence</li>
+					<li><strong>transcript</strong> — final result</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Example #3</h2>
+		<pre>
+			<code>let recognition = new webkitSpeechRecognition();</code>
+			<code>recognition.lang = 'en-US';</code>
+			<code>recognition.interimResults = false;</code>
+			<code>recognition.maxAlternatives = 1;</code>
+			<code>recognition.onresult = function(event) {</code>
+			<code>alert(event.results[0][0].transcript);</code>
+			<code>}</code>
+		</pre>
+		<p style="margin-top: -.5em;">Demo: <a href="https://jsfiddle.net/hamanovich/z6ybn3g9/" target="_blank">jsFiddle</a></p>
+	</section>
+	<section class="slide">
+		<h2>Speech Recognition: Grammars</h2>
+		<p>Grammar is defined using <a href="https://www.w3.org/TR/jsgf/" target="_blank">JSpeech Grammar Format</a> (JSGF). Other formats may also be supported in the future. <br> When language rules are useful:</p>
+		<ul>
+			<li>filters results;</li>
+			<li>customize vocabulary;</li>
+			<li>limits vocabulary.</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Grammar List</h2>
+		<pre>
+			<code>const grammar = '#JSGF V1.0; grammar colors;
+	public &lt;color&gt; = aqua | azure | beige | bisque
+	| sienna | silver | snow | tan | teal';</code>
+			<code class="mark">let speechRecognitionList = new webkitSpeechGrammarList();</code>
+			<code>speechRecognitionList.addFromString(grammar, 1);</code>
+			<code>recognition.grammars = speechRecognitionList;</code>
+		</pre>
+	</section>
+	<section class="slide" style="background-color: #2b3e50;">
+		<h2 class="shout shrink" style="color: #ebebeb; margin-top: -.25em;"><span style="color: #fff; font-size: .5em;">Demo:</span> <br/> <a href="http://epam.2i.by/iplayer/" target="_blank">iPlayer</a></h2>
+	</section>
+	<section class="slide">
+		<h2 class="shout shrink" style="color: #000;">Alternatives</h2>
+		<img src="img/3235253.png" class="cover" alt="">
+	</section>
+	<section class="slide">
+		<h2>Why?</h2>
+		<ul>
+			<li>The Web Speech API <strong style="color: #b31217;">awfully</strong> supported by browsers.</li>
+			<li>There are many redundunt effort for creating maintain and expand life project.</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Workaround</h2>
+		<ul>
+			<li>Web Audio API</li>
+			<li>JavaScript in browser (Pocketsphinx.js)</li>
+			<li>HTTP API proxied through server (IBM Watson)</li>
+			<li>…</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>PocketSphinx.js: Speech Recognition in JavaScript</h2>
+		<p>PocketSphinx.js is a speech recognizer that runs entirely in the web browser. It is built on:</p>
+		<ul>
+			<li>a speech recognizer written in C (PocketSphinx) converted into JavaScript using <a href="https://github.com/kripken/emscripten" target="_blank">Emscripten</a>;</li>
+			<li>an audio recorder using the web audio API.</li>
+		</ul>
+		<p>Demo: <a href="https://syl22-00.github.io/pocketsphinx.js/" target="_blank">https://syl22-00.github.io/pocketsphinx.js/</a></p>
+	</section>
+	<section class="slide">
+		<h2>IBM Watson Developer Cloud</h2>
+		<p><strong>IBM Watson</strong> is a technology platform that uses natural language processing and machine learning to reveal insights from large amounts of unstructured data.</p>
+		<p>Youtube video preview: <a href="https://epa.ms/OHWyt">https://epa.ms/OHWyt</a></p>
+	</section>
+	<section class="slide">
+		<h2>IBM Watson: Services</h2>
+		<ul>
+			<li><strong>Text to Speech</strong> — service understands text and natural language to generate synthesized audio output complete with appropriate rhythm and intonation (<a href="https://text-to-speech-demo.mybluemix.net/" target="_blank">demo</a>).</li>
+			<li><strong>Speech to Text</strong> — service uses speech recognition capabilities to convert speech into text (<a href="https://speech-to-text-demo.mybluemix.net/" target="_blank">demo</a>).</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Summary</h2>
+		<ul>
+			<li>Accessibility is important.</li>
+			<li>Speech Interfaces are the future.</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Questions?</h2>
+		<img src="img/8B.jpg" alt="" class="cover">
+	</section>
+
+	<!-- ||||||||||########||||||||| -->
+	<section class="slide">
+		<p>When speaker on the conference asked the question on the subject about which he has spoken and he does not know the right answer.</p>
+		<img src="img/7e045c78-fbd0-4632-93b7-7f15ce3b3da2.gif" alt="" style="min-width: 350px;"/>
+	</section>
+	<section class="slide">
+		<p>So… Obviously, the answer to this question<br> should be in the documentation.</p>
+		<img src="img/66348e7c-fe4c-4fdb-b12c-6edfa4fd1bb1.gif" alt="" style="min-width: 400px;"/>
+	</section>
+
+
+	<p class="badge">
+		<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank">Web Speech API</a>
+	</p>
+
+	<div class="progress"></div>
+	<script src="shower/shower.min.js"></script>
+</body>
+</html>
